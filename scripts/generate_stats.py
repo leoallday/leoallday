@@ -44,8 +44,7 @@ query($login: String!, $from: DateTime!, $to: DateTime!) {
         weeks { contributionDays { contributionCount date weekday } }
       }
     }
-    repositories(first: 100, ownerAffiliations: OWNER, isFork: false,
-                 privacy: PUBLIC) {
+    repositories(first: 100, ownerAffiliations: OWNER, isFork: false) {
       nodes {
         languages(first: 12, orderBy: {field: SIZE, direction: DESC}) {
           edges { size node { name } }
@@ -453,9 +452,9 @@ def write(path, svg):
 
 
 def main():
-    token = os.environ.get("GITHUB_TOKEN")
+    token = os.environ.get("STATS_TOKEN") or os.environ.get("GITHUB_TOKEN")
     if not token:
-        sys.exit("GITHUB_TOKEN is not set")
+        sys.exit("STATS_TOKEN / GITHUB_TOKEN is not set")
     login   = os.environ.get("GH_LOGIN", "leoallday")
     out_dir = os.environ.get("OUT_DIR", ".")
 
